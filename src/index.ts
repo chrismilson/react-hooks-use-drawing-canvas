@@ -1,5 +1,14 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
+export type DrawingMethod = (
+  /** A 2d context on the referenced canvas */
+  context: CanvasRenderingContext2D,
+  /** The width of the context */
+  width: number,
+  /** The height of the context */
+  height: number
+) => void | (() => void)
+
 /**
  * Provides an api for getting a 2d context from a canvas element.
  *
@@ -29,16 +38,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
  *
  * @param draw The drawing method
  */
-export default function useDrawingCanvas(
-  draw: (
-    /** A 2d context on the referenced canvas */
-    context: CanvasRenderingContext2D,
-    /** The width of the context */
-    width: number,
-    /** The height of the context */
-    height: number
-  ) => void | (() => void)
-) {
+export default function useDrawingCanvas(draw: DrawingMethod) {
   const ref = useRef<HTMLCanvasElement>()
   const [context, setContext] = useState<CanvasRenderingContext2D>()
 
