@@ -8,7 +8,12 @@
   "author": "Chris Milson",
   "license": "MIT",
   "scripts": {
-    "build": "rollup -c"
+    "lint": "eslint src/**/* --ext .tsx,.ts,.jsx,.js",
+    "build": "rollup -c",
+    "prepare": "yarn build",
+    "preversion": "yarn lint",
+    "version": "yarn lint --fix && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "devDependencies": {
     "@types/react": "^16.9.25",
