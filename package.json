@@ -1,10 +1,12 @@
 {
   "name": "react-hooks-use-drawing-canvas",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A react hook for 2d drawing",
   "main": "lib/index.js",
   "module": "lib/index.es.js",
-  "files": ["lib/**/*"],
+  "files": [
+    "lib/**/*"
+  ],
   "author": "Chris Milson",
   "license": "MIT",
   "scripts": {
