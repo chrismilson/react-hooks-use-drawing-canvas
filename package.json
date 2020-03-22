@@ -4,7 +4,7 @@
   "description": "A react hook for 2d drawing",
   "main": "lib/index.js",
   "module": "lib/index.es.js",
-  "types": "lib/index.d.ts",
+  "files": ["lib/**/*"],
   "author": "Chris Milson",
   "license": "MIT",
   "scripts": {
