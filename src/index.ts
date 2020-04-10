@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 export type DrawingMethod = (
   /** A 2d context on the referenced canvas */
@@ -64,7 +64,7 @@ export default function useDrawingCanvas(draw: DrawingMethod) {
     setContext(ref.current.getContext('2d'))
   }, [ref])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (context) {
       context.canvas.width = width
       context.canvas.height = height
