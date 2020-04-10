@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export type DrawingMethod = (
   /** A 2d context on the referenced canvas */
@@ -41,22 +41,36 @@ export type DrawingMethod = (
 export default function useDrawingCanvas(draw: DrawingMethod) {
   const ref = useRef<HTMLCanvasElement>()
   const [context, setContext] = useState<CanvasRenderingContext2D>()
+  const [{ width, height }, setSize] = useState({
+    width: 0,
+    height: 0
+  })
+
+  useEffect(() => {
+    if (!ref.current) return
+    const getSize = () => {
+      const width = ref.current.offsetWidth
+      const height = ref.current.offsetHeight
+      setSize({ width, height })
+    }
+    getSize()
+    window.addEventListener('resize', getSize)
+    return () => window.removeEventListener('resize', getSize)
+  }, [ref])
 
   useEffect(() => {
     if (!ref.current) return
 
-    const context = ref.current.getContext('2d')
-    context.canvas.width = ref.current.offsetWidth
-    context.canvas.height = ref.current.offsetHeight
-
-    setContext(context)
+    setContext(ref.current.getContext('2d'))
   }, [ref])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (context) {
-      return draw(context, context.canvas.width, context.canvas.height)
+      context.canvas.width = width
+      context.canvas.height = height
+      return draw(context, width, height)
     }
-  }, [context, draw])
+  }, [draw, context, width, height])
 
   return ref
 }
