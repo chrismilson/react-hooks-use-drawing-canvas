@@ -5,7 +5,8 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "target": "esnext",
-    "jsx": "react"
+    "jsx": "react",
+    "moduleResolution": "node"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/__tests__/*"]
