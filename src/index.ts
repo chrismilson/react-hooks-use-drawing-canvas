@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import useCanvasSize from 'react-hooks-use-canvas-size'
 
 export type DrawingMethod = (
   /** A 2d context on the referenced canvas */
@@ -46,22 +47,7 @@ export type DrawingMethod = (
 export default function useDrawingCanvas(draw: DrawingMethod) {
   const ref = useRef<HTMLCanvasElement>()
   const [context, setContext] = useState<CanvasRenderingContext2D>()
-  const [{ width, height }, setSize] = useState({
-    width: 0,
-    height: 0
-  })
-
-  useEffect(() => {
-    if (!ref.current) return
-    const getSize = () => {
-      const width = ref.current.offsetWidth
-      const height = ref.current.offsetHeight
-      setSize({ width, height })
-    }
-    getSize()
-    window.addEventListener('resize', getSize)
-    return () => window.removeEventListener('resize', getSize)
-  }, [ref])
+  const { width, height } = useCanvasSize(ref)
 
   useEffect(() => {
     if (!ref.current) return
