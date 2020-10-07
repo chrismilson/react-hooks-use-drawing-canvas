@@ -885,6 +885,11 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
+react-hooks-use-canvas-size@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-hooks-use-canvas-size/-/react-hooks-use-canvas-size-0.2.0.tgz#9ad82f3c288b9223fa9606bda362920e374e98d0"
+  integrity sha512-rVANKAzNLn/kxa0lkk5q01WweszlEOLZW2VKtofNbga1sts5Gb8MXeM+RDJLSexESrFsofpQMAub0bM2tAsOzw==
+
 react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
