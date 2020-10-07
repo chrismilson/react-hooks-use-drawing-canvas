@@ -12,6 +12,12 @@ export type DrawingMethod = (
     width: number
     /** The height of the context */
     height: number
+    /**
+     * A flag that tells the drawing method about the user's motion preferences.
+     * Perhaps a drawing method that has excessive movement would include a case
+     * for users that prefer reduced motion. Defaults to reduced motion.
+     */
+    prefersReducedMotion: boolean
   }
 ) => void | (() => void)
 
@@ -59,7 +65,13 @@ export default function useDrawingCanvas(draw: DrawingMethod) {
     if (context) {
       context.canvas.width = width
       context.canvas.height = height
-      return draw(context, { width, height })
+      return draw(context, {
+        width,
+        height,
+        prefersReducedMotion: !window.matchMedia(
+          '(prefers-reduced-motion: no-preferece)'
+        ).matches
+      })
     }
   }, [draw, context, width, height])
 
