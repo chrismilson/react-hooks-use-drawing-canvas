@@ -3,10 +3,15 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 export type DrawingMethod = (
   /** A 2d context on the referenced canvas */
   context: CanvasRenderingContext2D,
-  /** The width of the context */
-  width: number,
-  /** The height of the context */
-  height: number
+  /** Some properties about the canvas that may or may not be critical to the
+   * way the method is used.
+   */
+  props: {
+    /** The width of the context */
+    width: number
+    /** The height of the context */
+    height: number
+  }
 ) => void | (() => void)
 
 /**
@@ -68,7 +73,7 @@ export default function useDrawingCanvas(draw: DrawingMethod) {
     if (context) {
       context.canvas.width = width
       context.canvas.height = height
-      return draw(context, width, height)
+      return draw(context, { width, height })
     }
   }, [draw, context, width, height])
 
