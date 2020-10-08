@@ -1,6 +1,6 @@
 {
   "name": "react-hooks-use-drawing-canvas",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A react hook for 2d drawing",
   "main": "lib/index.js",
   "module": "lib/index.es.js",
