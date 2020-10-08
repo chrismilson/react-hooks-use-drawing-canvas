@@ -65,7 +65,7 @@ export default function useDrawingCanvas(draw: DrawingMethod) {
     if (context) {
       context.canvas.width = width
       context.canvas.height = height
-      let cleanUp = null
+      let cleanUp: void | (() => void)
 
       const timeout = setTimeout(() => {
         cleanUp = draw(context, {
@@ -79,7 +79,7 @@ export default function useDrawingCanvas(draw: DrawingMethod) {
 
       return () => {
         clearTimeout(timeout)
-        if (cleanUp !== null) {
+        if (cleanUp) {
           cleanUp()
         }
       }
