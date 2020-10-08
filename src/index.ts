@@ -22,6 +22,37 @@ export type DrawingMethod = (
 ) => void | (() => void)
 
 /**
+ * A wrapper that will debounce the drawing method and call the drawing method
+ * asynchronously.
+ *
+ * @param draw A closure that calls the drawing method with the intended props.
+ * @param time The time to debounce in milliseconds.
+ */
+const debounceDraw = (
+  draw: () => void | (() => void),
+  time: number
+): (() => void) => {
+  let canceled = false
+  let cleanUp: void | (() => void)
+
+  const timeout = setTimeout(async () => {
+    if (!canceled) {
+      cleanUp = draw()
+    }
+  }, time)
+
+  return () => {
+    // cancel the timeout
+    clearTimeout(timeout)
+    // set the canceled flag
+    canceled = true
+    if (cleanUp) {
+      cleanUp
+    }
+  }
+}
+
+/**
  * Provides an api for getting a 2d context from a canvas element.
  *
  * The returned reference should be assigned to a canvas element. The drawing
@@ -65,24 +96,18 @@ export default function useDrawingCanvas(draw: DrawingMethod) {
     if (context) {
       context.canvas.width = width
       context.canvas.height = height
-      let cleanUp: void | (() => void)
 
-      const timeout = setTimeout(() => {
-        cleanUp = draw(context, {
-          width,
-          height,
-          prefersReducedMotion: !window.matchMedia(
-            '(prefers-reduced-motion: no-preferece)'
-          ).matches
-        })
-      }, 50)
-
-      return () => {
-        clearTimeout(timeout)
-        if (cleanUp) {
-          cleanUp()
-        }
-      }
+      return debounceDraw(
+        () =>
+          draw(context, {
+            width,
+            height,
+            prefersReducedMotion: !window.matchMedia(
+              '(prefers-reduced-motion: no-preferece)'
+            ).matches
+          }),
+        50
+      )
     }
   }, [draw, context, width, height])
 
