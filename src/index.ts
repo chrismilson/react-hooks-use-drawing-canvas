@@ -65,13 +65,24 @@ export default function useDrawingCanvas(draw: DrawingMethod) {
     if (context) {
       context.canvas.width = width
       context.canvas.height = height
-      return draw(context, {
-        width,
-        height,
-        prefersReducedMotion: !window.matchMedia(
-          '(prefers-reduced-motion: no-preferece)'
-        ).matches
-      })
+      let cleanUp = null
+
+      const timeout = setTimeout(() => {
+        cleanUp = draw(context, {
+          width,
+          height,
+          prefersReducedMotion: !window.matchMedia(
+            '(prefers-reduced-motion: no-preferece)'
+          ).matches
+        })
+      }, 50)
+
+      return () => {
+        clearTimeout(timeout)
+        if (cleanUp !== null) {
+          cleanUp()
+        }
+      }
     }
   }, [draw, context, width, height])
 
