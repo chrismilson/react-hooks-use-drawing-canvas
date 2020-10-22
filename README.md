@@ -8,7 +8,7 @@ simple.
 ## Installation
 
 ```bash
-yarn add react-hooks-use-drawing-context
+yarn add react-hooks-use-drawing-canvas
 ```
 
 ## Usage
